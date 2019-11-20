@@ -134,3 +134,108 @@ input[type=text], input[type=submit], textarea {
 input, button, select, textarea {
 	font-family:'Open Sans', Arial, sans-serif;
 }
+/* =========================================================
+02. Typography
+============================================================ */
+
+p {
+	line-height: 1.6em;
+	margin: 0 0 10px 0;
+}
+
+blockquote {
+	font-size:18px;
+	border:none;
+	padding:0;
+}
+
+blockquote.large {
+	font-size:36px;
+	font-weight:700;
+	line-height:1.1em;
+}
+blockquote.large:before {
+	font-size:64px;
+	font-family: FontAwesome;
+	content: "\f10d";
+	margin-right:20px;
+}
+
+blockquote cite 						{ display:block; font-size:12px;}
+blockquote cite:before 					{ content:"\2014 \0020"; }
+blockquote cite a,
+blockquote cite a:visited,
+blockquote cite a:visited 				{ color:#555; }
+
+ul, ol {
+	font-size: 1em; /* 16px */
+	line-height: 1.5; /* 24px */
+	margin: 0 0 1.5em 0;
+}
+body, input, textarea {
+}
+
+a {
+  color: #454545;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+	text-decoration: underline;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+	color: #312f2b;
+	line-height:1.1em;
+	font-family:'Open Sans', Arial, sans-serif;
+}
+h1 {
+	font-size: 36px;
+	margin-bottom:20px;
+}
+h2 {
+	font-size: 30px;
+	margin-bottom:20px;
+}
+h3 {
+	font-size: 26px;
+	margin-bottom:20px;
+}
+h4 {
+	font-size: 22px;
+	margin-bottom:20px;
+}
+h5 {
+	font-size: 18px;
+	margin-bottom:15px;
+}
+h6 {
+	font-size: 16px;
+	margin-bottom:10px;
+}
+strong {
+	font-weight:700;
+	font-family: 'Open Sans', sans-serif;
+}
+small {
+	font-size: 0.75em; /* 12px */
+	line-height: 2; /* 24px */
+	margin-top: 2em;
+	margin-bottom: 0em;
+}
+em {
+	font-style: normal;
+	font-family: 'Open Sans';
+}
+.muted {
+	color: #A5A5A2;
+}
+.impressed {
+	text-shadow:
+ -1px -1px 0 rgba(0, 0, 0, 0.5), /* shadow */  1px 1px 0 rgba(255, 255, 255, 0.9); /* highlight */
+}
+
+h2.pagetitle {
+	color:#fff;
+	font-size:46px;
+}
