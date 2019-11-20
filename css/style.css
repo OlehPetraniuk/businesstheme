@@ -988,3 +988,33 @@ footer ul.social-networks li a i.icon-pinterest:hover {
 	background: #d84848;
 	color: #fff;
 }
+
+/* =========================================================
+07. Icons
+============================================================ */
+
+/* bg */
+i.icon-bglight {
+	color: #444;
+	background: #f7f7f7;
+}
+i.icon-bglight.active {
+	color: #fff;
+}
+
+i.icon-bglight.active:hover{
+	color: #444;
+	background: #f7f7f7;
+}
+
+i.icon-bgdark {
+	color: #f7f7f7;
+	background: #333;
+}
+i.icon-bgdark:hover {
+	color: #fff;
+}
+i.icon-bgdark.active:hover {
+	color: #f7f7f7;
+	background: #333;
+}
