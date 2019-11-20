@@ -642,3 +642,38 @@ section.spacer blockquote cite {
 	-o-transition-duration: 0s;
 	transition-duration: 0s;
 }
+
+/* === section services === */
+
+section#services h2 {
+	font-size: 22px;
+	margin-bottom: 15px;
+	margin-top: 10px;
+	text-align:center;
+}
+section#services p {
+	margin:10px;
+}
+
+
+section#services .service-box {
+	text-align: center;
+	padding: 20px;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+section#services .span3:hover {
+	background:#e3e3e3;
+}
+
+section#services .service-box h2 {
+	color: #f7f7f7;
+	font-weight: 700;
+}
+
+section#services.section.orange .service-box:hover {
+	background:#f36518;
+}
