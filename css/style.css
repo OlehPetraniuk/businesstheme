@@ -1,0 +1,136 @@
+/*
+===========================
+CONTENTS:
+
+01 General
+02 Typography
+03 Non-semantic
+04 Navbar
+05 Page sections
+06 Footer
+07 Icons
+08 Buttons
+09 Media queries 
+===========================
+*/
+/* Import css */
+/* Google font */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+/* bootstrap */
+@import url('bootstrap.css');
+/* bootstrap responsive */
+@import url('bootstrap-responsive.css');
+/* prettyPhoto */
+@import url('prettyPhoto.css');
+/* flexslider */
+@import url('flexslider.css');
+
+/* font awesome */
+@import url('font-awesome.css');
+/* overwrite */
+@import url('overwrite.css');
+/* animation */
+@import url('animate.css');
+
+
+
+/* =========================================================
+01. General
+============================================================ */
+
+div, article, section, header, footer, nav, li {
+	position:relative;
+}
+.group:after {
+	display:block;
+	height:0;
+	clear:both;
+	content:".";
+	visibility:hidden; /* For clearing */
+}
+body {
+	background:#fff;
+	color: #444;
+	font-size: 16px;
+	font-weight:300;
+	font-family:'Open Sans', Arial, sans-serif;
+}
+
+body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+::-moz-selection {
+	color:#333;
+}
+::selection {
+	color:#333;
+}
+
+/* scroll to top */
+.scrollup{
+    position:fixed;
+	width:32px;
+	height:32px;
+    bottom:20px;
+    right:20px;
+}
+
+a.scrollup {
+	outline:0;
+	text-decoration:none;
+}
+
+a.scrollup:hover,a.scrollup:active,a.scrollup:focus {
+	opacity:1;
+	text-decoration:none;
+	-webkit-transition: all 400ms ease-out 0s;	
+	   -moz-transition: all 400ms ease-out 0s;
+		 -o-transition: all 400ms ease-out 0s;
+		    transition: all 400ms ease-out 0s;
+}
+a.scrollup i:hover {
+	text-decoration:none;
+}
+
+.blankdivider10 {
+	height: 10px;
+	display: block;
+}
+
+.blankdivider20 {
+	height: 20px;
+	display: block;
+}
+.blankdivider30 {
+	height: 30px;
+	display: block;
+}
+
+.row {
+	margin-bottom:30px;
+}
+
+.row .row{
+	margin-bottom:30px;
+}
+
+.row.nomargin {
+	margin-bottom:0;
+}
+
+
+/*---------- forms ----------*/
+
+input[type=text], input[type=submit], textarea {
+	width: 100%;
+	padding: 0.5em;
+	font-size: 1em;
+	margin-bottom: 1.5em;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+input, button, select, textarea {
+	font-family:'Open Sans', Arial, sans-serif;
+}
