@@ -1188,3 +1188,278 @@ i.icon-white {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
+
+/* =========================================================
+08. Buttons
+============================================================ */
+ 
+.btn {
+	color: #fff;
+	text-shadow: none;
+	font-size: 16px;
+	padding: 11px 19px;
+	letter-spacing: 0.05em;
+	border: 0;
+	text-transform: none;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+  background-color: #545454;
+  border-color: none;
+  *background-color: #545454;
+  background-image: none;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: none;
+  border: none;
+  *border: 0;
+  border-bottom-color: none;
+}
+.btn:link, .btn:visited {
+	color: #fff;
+}
+.btn:hover {
+	background: #333 !important;
+}
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn.disabled,
+.btn[disabled] {
+  color: #fff;
+  background-color: #333;
+  *background-color: #333;
+}
+
+
+.btn.btn-theme:hover {
+	background: #333 !important;
+}
+
+/* size */
+.btn-large {
+  padding: 18px 25px;
+  font-size: 24px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.btn-large [class^="icon-"],
+.btn-large [class*=" icon-"] {
+  margin-top: 4px;
+}
+
+.btn-small {
+  padding: 6px 13px;
+  font-size: 11.9px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.btn-small [class^="icon-"],
+.btn-small [class*=" icon-"] {
+  margin-top: 0;
+}
+
+.btn-mini [class^="icon-"],
+.btn-mini [class*=" icon-"] {
+  margin-top: -1px;
+}
+
+.btn-mini {
+  padding: 0 6px;
+  font-size: 10.5px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+/* end size */
+
+.btn-primary {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #09828c;
+  *background-color: #09828c;
+  background-image: none;
+  border-color: none;
+  filter:none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  color: #ffffff;
+  background: #065158;
+  *background-color: #065158;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #065158 \9;
+}
+
+.btn-warning {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #ffe873;
+  *background-color: #ffe873;
+  background-image: none;
+  border-color: none;
+  filter:none;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active,
+.btn-warning.disabled,
+.btn-warning[disabled] {
+  color: #ffffff;
+  background: #b88f22;
+  *background: #b88f22;
+}
+
+.btn-warning:active,
+.btn-warning.active {
+  background: #b88f22 \9;
+}
+
+
+.btn-danger {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #f36f36;
+  *background-color: #f36f36;
+  background-image: none;
+  border-color: none;
+  filter:none;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.btn-danger.disabled,
+.btn-danger[disabled] {
+  color: #ffffff;
+  background: #db5f58;
+  *background: #db5f58;
+}
+
+.btn-danger:active,
+.btn-danger.active {
+  background: #db5f58 \9;
+}
+
+.btn-success {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #1bac91;
+  *background-color: #1bac91;
+  background-image: none;
+  border-color: none;
+  filter:none;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  color: #ffffff;
+  background: #55ba93;
+  *background: #55ba93;
+}
+
+.btn-success:active,
+.btn-success.active {
+  background: #55ba93 \9;
+}
+
+.btn-info {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #4dbdc6;
+  *background-color: #4dbdc6;
+  background-image: none;
+  border-color: none;
+  filter:none;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.btn-info.disabled,
+.btn-info[disabled] {
+  color: #ffffff;
+  background: #6a9ad0;
+  *background: #6a9ad0;
+}
+
+.btn-info:active,
+.btn-info.active {
+  background: #6a9ad0 \9;
+}
+
+.btn-inverse {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #3c3c3c;
+  *background-color: #3c3c3c;
+  background-image: none;
+  border-color: none;
+  filter:none;
+}
+
+.btn-inverse:hover,
+.btn-inverse:focus,
+.btn-inverse:active,
+.btn-inverse.active,
+.btn-inverse.disabled,
+.btn-inverse[disabled] {
+  color: #ffffff;
+  background: #2b2a2a;
+  *background: #2b2a2a;
+}
+
+.btn-inverse:active,
+.btn-inverse.active {
+  background: #2b2a2a \9;
+}
+
+
+/* button flat */
+.btn-flat {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+/* button rounded */
+.btn-rounded {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.btn-large.btn-rounded {
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
+  border-radius: 28px;
+}
+
+
+.navbar-inverse .btn-navbar {
+	width: auto;
+	height: auto;
+}
