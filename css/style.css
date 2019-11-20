@@ -919,3 +919,72 @@ div.cform-response-output {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
+
+/* =========================================================
+06. Footer
+============================================================ */
+
+footer {
+	background: #2b2b2b;
+	text-align: center;
+	color: #ddd;
+	padding:50px 0 50px;
+}
+
+footer a {
+    color: #ddd;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+footer ul.social-networks {
+	list-style:none;
+}
+
+footer ul.social-networks li {
+	display:inline;
+}
+
+footer ul.social-networks li i {
+	display:inline-block;
+}
+
+footer ul.social-networks li a {
+	color: #5e5e5e;
+	margin: 0 5px;
+}
+
+footer ul.social-networks li a:hover {
+	text-decoration:none;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+footer ul.social-networks li i.icon-bgdark {
+	background:#414141;
+	color: #656565;
+}
+
+
+footer ul.social-networks li a i.icon-instagram:hover {
+	background: #ba7b3d;
+	color: #fff;
+}
+
+footer ul.social-networks li a i.icon-twitter:hover {
+	background: #5ad2eb;
+	color: #fff;
+}
+footer ul.social-networks li a i.icon-dribbble:hover {
+	background: #f57b71;
+	color: #fff;
+}
+footer ul.social-networks li a i.icon-pinterest:hover {
+	background: #d84848;
+	color: #fff;
+}
