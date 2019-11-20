@@ -1463,3 +1463,152 @@ i.icon-white {
 	width: auto;
 	height: auto;
 }
+/* =========================================================
+09. Media queries
+============================================================ */
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+	body {
+		padding-left:0 ;
+		padding-right:0;
+		padding:0;
+	}
+	
+	.navbar-inner {
+	 padding-right: 20px;
+	 padding-left: 20px;	
+	}
+	
+	.navbar-inner h1.brand {
+		margin-left:20px;
+	}
+	
+	.navbar-inner .btn-navbar {
+		margin:20px 20px 0;
+	}
+	
+	.container {
+	 padding-right: 20px;
+	 padding-left: 20px;
+	}	
+	.navbar-inverse .navbar-inner {
+		padding:0 0 30px;
+	}
+	
+	.nav-collapse {
+		text-align:center;
+		width:100%;
+	}
+
+}
+
+@media (max-width: 767px) {
+	body {
+		padding-left:0 ;
+		padding-right:0;
+		padding:0;
+	}
+	.navbar-inner {
+	 padding-right: 20px;
+	 padding-left: 20px;	
+	}
+	
+	.navbar-inner h1.brand {
+		margin-left:20px;
+	}
+	
+	.navbar-inner .btn-navbar {
+		margin:20px 20px 0;
+	}
+	
+	.container {
+	 padding-right: 20px;
+	 padding-left: 20px;
+	}	
+	.navbar-inverse .navbar-inner {
+		padding:0 20px 30px;
+	}
+	
+	.nav-collapse {
+		text-align:center;
+		width:100%;
+	}
+	#portfolio-wrap .grid {
+		width: 25%;
+	}
+}
+    
+    /* Smaller screens ----------- */
+@media (max-width : 480px) {
+	#header-wrapper {
+		padding-top:80px;
+	}
+
+	#team .team-thumb {
+		 margin-right: auto;
+		 margin-left: auto;
+		 width: 150px;
+		 display: block;
+		 text-align:center;
+	}
+
+	#portfolio-wrap .grid {
+		width: 50%;
+	}
+
+}
+    
+    /* Smartphones (portrait and landscape) ----------- */
+@media only screen  and (min-device-width : 320px)  and (max-device-width : 480px) {
+
+ section.section {
+ padding: 1em 0;
+}
+
+ #works .container {
+ top: 0 !important;
+}
+
+.max-img {
+ width: 100%;
+}
+ .max-img {
+ margin-right: auto;
+ margin-left: auto;
+ display: block;
+}
+
+ section#services h2 {
+ margin-bottom: 0.25em;
+}
+ section#services h2, section#services ul {
+ text-align: center;
+}
+		
+
+/* team */
+		
+#team .team-thumb {
+ margin-right: auto;
+ margin-left: auto;
+ width: 150px;
+ display: block;
+ text-align:center
+}
+ .job-position: {
+ margin-bottom: 1.5em;
+}
+ .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+ margin-left: auto;
+ margin-right: auto;
+}
+		
+/* Contact Form */
+	#contact-form {
+		overflow: hidden;
+	}
+	#contact-form input[type=submit] {
+		width: 100%;
+	}
+}
