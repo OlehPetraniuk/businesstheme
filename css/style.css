@@ -1018,3 +1018,32 @@ i.icon-bgdark.active:hover {
 	color: #f7f7f7;
 	background: #333;
 }
+
+/* square */
+i.icon-square {
+	display: inline-block;
+	text-align: center;
+	width: 24px !important;
+	height: 24px !important;
+	line-height: 24px !important;
+}
+i.icon-square.icon-2x{
+	width: 48px !important;
+	height: 48px !important;
+	line-height: 48px !important;
+}
+i.icon-square.icon-3x{
+	width: 72px !important;
+	height: 72px !important;
+	line-height: 72px !important;
+}
+i.icon-square.icon-4x{
+	width: 96px !important;
+	height: 96px !important;
+	line-height: 96px !important;
+}
+i.icon-square.icon-5x{
+	width: 120px !important;
+	height: 120px !important;
+	line-height: 120px !important;
+}
