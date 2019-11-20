@@ -262,3 +262,66 @@ h2.pagetitle {
 .medium {
 	font-weight: normal;
 }
+
+/* =========================================================
+04. Navigation
+============================================================ */
+
+.navbar-fixed-top .container {
+/* Uncomment to make nav expand full width */
+ /*	width: auto; */
+}
+.navbar .brand {
+	margin-left:0;
+	padding: 0;
+	margin-top: 1.05em;
+}
+.navbar .brand a {
+	padding: 0;
+	color: #fff;
+	font-size: 1.75em;
+	margin-left: 0;
+	font-weight: 400;
+	text-transform:uppercase;
+}
+.navbar .brand a:hover {
+	text-decoration: none;
+ transition: color .15s linear;
+ -webkit-transition: color .15s linear;
+ -moz-transition: color .15s linear;
+}
+.navbar .brand a:focus {
+	outline: none;
+}
+.navbar-inner {
+	min-height: 4.75em;
+}
+.navbar-inverse .navbar-inner {
+	background-repeat: repeat;
+	background-color: #0b333f;
+}
+.navbar-wrapper {
+	overflow:hidden;
+}
+#menu-main {
+	margin-top: 1.125em;
+}
+ul#menu-main > li > a {
+	font-weight: 600;
+	color: #fff;
+	font-size:14px;
+	text-transform:uppercase;
+}
+ul#menu-main > li > a:hover {
+	padding: 9px 15px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+ul#menu-main > li > a:focus {
+	outline:0;
+}
+
+.navbar-inverse .brand, .navbar-inverse .nav > li > a {
+	text-shadow: none;
+}
