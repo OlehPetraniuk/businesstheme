@@ -239,3 +239,26 @@ h2.pagetitle {
 	color:#fff;
 	font-size:46px;
 }
+
+/* =========================================================
+03. Misc
+============================================================ */
+
+.hide-text {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 1em;
+}
+.alignright {
+	text-align: right;
+}
+.alignleft {
+	text-align: left;
+}
+.aligncenter {
+	text-align: center;
+}
+.medium {
+	font-weight: normal;
+}
