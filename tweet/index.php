@@ -632,3 +632,33 @@ class tmhOAuth {
     $this->metrics['interval_start'] = $now;
     return $this->metrics;
   }
+
+  /**
+   * Utility function to create the request URL in the requested format
+   *
+   * @param string $request the API method without extension
+   * @param string $format the format of the response. Default json. Set to an empty string to exclude the format
+   * @return string the concatenation of the host, API version, API method and format
+   */
+  public function url($request, $format='json') {
+    $format = strlen($format) > 0 ? ".$format" : '';
+    $proto  = $this->config['use_ssl'] ? 'https:/' : 'http:/';
+
+    // backwards compatibility with v0.1
+    if (isset($this->config['v']))
+      $this->config['host'] = $this->config['host'] . '/' . $this->config['v'];
+
+    $request = ltrim($request, '/');
+
+    $pos = strlen($request) - strlen($format);
+    if (substr($request, $pos) === $format)
+      $request = substr_replace($request, '', $pos);
+
+    return implode('/', array(
+      $proto,
+      $this->config['host'],
+      $request . $format
+    ));
+  }
+
+  
