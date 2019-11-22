@@ -375,3 +375,33 @@ class tmhOAuth {
   private function prepare_method($method) {
     $this->method = strtoupper($method);
   }
+
+  /**
+   * Prepares the URL for use in the base string by ripping it apart and
+   * reconstructing it.
+   *
+   * Ref: 3.4.1.2
+   *
+   * @param string $url the request URL
+   * @return void value is stored to the class variable 'url'
+   */
+  private function prepare_url($url) {
+    $parts = parse_url($url);
+
+    $port   = isset($parts['port']) ? $parts['port'] : false;
+    $scheme = $parts['scheme'];
+    $host   = $parts['host'];
+    $path   = isset($parts['path']) ? $parts['path'] : false;
+
+    $port or $port = ($scheme == 'https') ? '443' : '80';
+
+    if (($scheme == 'https' && $port != '443')
+        || ($scheme == 'http' && $port != '80')) {
+      $host = "$host:$port";
+    }
+
+    // the scheme and host MUST be lowercase
+    $this->url = strtolower("$scheme://$host");
+    // but not the path
+    $this->url .= $path;
+  }
