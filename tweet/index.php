@@ -775,4 +775,96 @@ class tmhOAuth {
         break;
     }
 
+    // configure curl
+    $c = curl_init();
+    curl_setopt_array($c, array(
+      CURLOPT_USERAGENT      => $this->config['user_agent'],
+      CURLOPT_CONNECTTIMEOUT => $this->config['curl_connecttimeout'],
+      CURLOPT_TIMEOUT        => $this->config['curl_timeout'],
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_SSL_VERIFYPEER => $this->config['curl_ssl_verifypeer'],
+      CURLOPT_SSL_VERIFYHOST => $this->config['curl_ssl_verifyhost'],
+
+      CURLOPT_FOLLOWLOCATION => $this->config['curl_followlocation'],
+      CURLOPT_PROXY          => $this->config['curl_proxy'],
+      CURLOPT_ENCODING       => $this->config['curl_encoding'],
+      CURLOPT_URL            => $this->url,
+      // process the headers
+      CURLOPT_HEADERFUNCTION => array($this, 'curlHeader'),
+      CURLOPT_HEADER         => false,
+      CURLINFO_HEADER_OUT    => true,
+    ));
+
+    if ($this->config['curl_cainfo'] !== false)
+      curl_setopt($c, CURLOPT_CAINFO, $this->config['curl_cainfo']);
+
+    if ($this->config['curl_capath'] !== false)
+      curl_setopt($c, CURLOPT_CAPATH, $this->config['curl_capath']);
+
+    if ($this->config['curl_proxyuserpwd'] !== false)
+      curl_setopt($c, CURLOPT_PROXYUSERPWD, $this->config['curl_proxyuserpwd']);
+
+    if ($this->config['is_streaming']) {
+      // process the body
+      $this->response['content-length'] = 0;
+      curl_setopt($c, CURLOPT_TIMEOUT, 0);
+      curl_setopt($c, CURLOPT_WRITEFUNCTION, array($this, 'curlWrite'));
+    }
+
+    switch ($this->method) {
+      case 'GET':
+        break;
+      case 'POST':
+        curl_setopt($c, CURLOPT_POST, true);
+        curl_setopt($c, CURLOPT_POSTFIELDS, $this->request_params);
+        break;
+      default:
+        curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
+    }
+
+    if ( ! empty($this->request_params) ) {
+      // if not doing multipart we need to implode the parameters
+      if ( ! $this->config['multipart'] ) {
+        foreach ($this->request_params as $k => $v) {
+          $ps[] = "{$k}={$v}";
+        }
+        $this->request_params = implode('&', $ps);
+      }
+      curl_setopt($c, CURLOPT_POSTFIELDS, $this->request_params);
+    }
+
+    if ( ! empty($this->headers)) {
+      foreach ($this->headers as $k => $v) {
+        $headers[] = trim($k . ': ' . $v);
+      }
+      curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
+    }
+
+    if (isset($this->config['prevent_request']) && (true == $this->config['prevent_request']))
+      return 0;
+
+    // do it!
+    $response = curl_exec($c);
+    $code = curl_getinfo($c, CURLINFO_HTTP_CODE);
+    $info = curl_getinfo($c);
+    $error = curl_error($c);
+    $errno = curl_errno($c);
+    curl_close($c);
+
+    // store the response
+    $this->response['code'] = $code;
+    $this->response['response'] = $response;
+    $this->response['info'] = $info;
+    $this->response['error'] = $error;
+    $this->response['errno'] = $errno;
+
+    if (!isset($this->response['raw'])) {
+      $this->response['raw'] = '';
+    }
+    $this->response['raw'] .= $response;
+
+    return $code;
+  }
+}
+
   
