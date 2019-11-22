@@ -274,3 +274,33 @@ class tmhOAuth {
       $this->config['nonce'] = md5(substr($prefix . implode('', $sequence), 0, $length));
     }
   }
+  /**
+   * Generates a timestamp.
+   * If 'force_timestamp' is true a nonce is not generated and the value in the configuration will be retained.
+   *
+   * @return void value is stored to the config array class variable
+   */
+  private function create_timestamp() {
+    $this->config['timestamp'] = ($this->config['force_timestamp'] == false ? time() : $this->config['timestamp']);
+  }
+
+  /**
+   * Encodes the string or array passed in a way compatible with OAuth.
+   * If an array is passed each array value will will be encoded.
+   *
+   * @param mixed $data the scalar or array to encode
+   * @return $data encoded in a way compatible with OAuth
+   */
+  private function safe_encode($data) {
+    if (is_array($data)) {
+      return array_map(array($this, 'safe_encode'), $data);
+    } else if (is_scalar($data)) {
+      return str_ireplace(
+        array('+', '%7E'),
+        array(' ', '~'),
+        rawurlencode($data)
+      );
+    } else {
+      return '';
+    }
+  }
