@@ -256,3 +256,21 @@ class tmhOAuth {
     $ua = 'tmhOAuth ' . self::VERSION . $ssl . ' - //github.com/themattharris/tmhOAuth';
     $this->config['user_agent'] = $ua;
   }
+  /**
+   * Generates a random OAuth nonce.
+   * If 'force_nonce' is true a nonce is not generated and the value in the configuration will be retained.
+   *
+   * @param string $length how many characters the nonce should be before MD5 hashing. default 12
+   * @param string $include_time whether to include time at the beginning of the nonce. default true
+   * @return void value is stored to the config array class variable
+   */
+  private function create_nonce($length=12, $include_time=true) {
+    if ($this->config['force_nonce'] == false) {
+      $sequence = array_merge(range(0,9), range('A','Z'), range('a','z'));
+      $length = $length > count($sequence) ? count($sequence) : $length;
+      shuffle($sequence);
+
+      $prefix = $include_time ? microtime() : '';
+      $this->config['nonce'] = md5(substr($prefix . implode('', $sequence), 0, $length));
+    }
+  }
