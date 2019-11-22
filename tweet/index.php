@@ -347,3 +347,31 @@ class tmhOAuth {
 
     return $_defaults;
   }
+  /**
+   * Extracts and decodes OAuth parameters from the passed string
+   *
+   * @param string $body the response body from an OAuth flow method
+   * @return array the response body safely decoded to an array of key => values
+   */
+  public function extract_params($body) {
+    $kvs = explode('&', $body);
+    $decoded = array();
+    foreach ($kvs as $kv) {
+      $kv = explode('=', $kv, 2);
+      $kv[0] = $this->safe_decode($kv[0]);
+      $kv[1] = $this->safe_decode($kv[1]);
+      $decoded[$kv[0]] = $kv[1];
+    }
+    return $decoded;
+  }
+
+  /**
+   * Prepares the HTTP method for use in the base string by converting it to
+   * uppercase.
+   *
+   * @param string $method an HTTP method such as GET or POST
+   * @return void value is stored to the class variable 'method'
+   */
+  private function prepare_method($method) {
+    $this->method = strtoupper($method);
+  }
