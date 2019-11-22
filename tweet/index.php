@@ -661,4 +661,43 @@ class tmhOAuth {
     ));
   }
 
+  /**
+   * Public access to the private safe decode/encode methods
+   *
+   * @param string $text the text to transform
+   * @param string $mode the transformation mode. either encode or decode
+   * @return string $text transformed by the given $mode
+   */
+  public function transformText($text, $mode='encode') {
+    return $this->{"safe_$mode"}($text);
+  }
+
+  /**
+   * Utility function to parse the returned curl headers and store them in the
+   * class array variable.
+   *
+   * @param object $ch curl handle
+   * @param string $header the response headers
+   * @return string the length of the header
+   */
+  private function curlHeader($ch, $header) {
+    $this->response['raw'] .= $header;
+
+    list($key, $value) = array_pad(explode(':', $header, 2), 2, null);
+
+    $key = trim($key);
+    $value = trim($value);
+
+    if ( ! isset($this->response['headers'][$key])) {
+      $this->response['headers'][$key] = $value;
+    } else {
+      if (!is_array($this->response['headers'][$key])) {
+        $this->response['headers'][$key] = array($this->response['headers'][$key]);
+      }
+      $this->response['headers'][$key][] = $value;
+    }
+
+    return strlen($header);
+  }
+
   
