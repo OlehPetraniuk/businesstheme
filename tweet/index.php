@@ -1130,4 +1130,21 @@ class tmhUtilities {
     return $password;
   }
 
+  /**
+   * Check if one string ends with another
+   *
+   * @param string $haystack the string to check inside of
+   * @param string $needle the string to check $haystack ends with
+   * @return true if $haystack ends with $needle, false otherwise
+   */
+  public static function endswith($haystack, $needle) {
+    $haylen  = strlen($haystack);
+    $needlelen = strlen($needle);
+    if ($needlelen > $haylen)
+      return false;
+
+    return substr_compare($haystack, $needle, -$needlelen) === 0;
+  }
+}
+
   
