@@ -523,3 +523,33 @@ class tmhOAuth {
     $this->auth_header = 'OAuth ' . implode(', ', $kv);
     $this->headers['Authorization'] = $this->auth_header;
   }
+
+  /**
+   * Signs the request and adds the OAuth signature. This runs all the request
+   * parameter preparation methods.
+   *
+   * @param string $method the HTTP method being used. e.g. POST, GET, HEAD etc
+   * @param string $url the request URL without query string parameters
+   * @param array $params the request parameters as an array of key=value pairs
+   * @param string $useauth whether to use authentication when making the request.
+   * @return void
+   */
+  private function sign($method, $url, $params, $useauth) {
+    $this->prepare_method($method);
+    $this->prepare_url($url);
+    $this->prepare_params($params);
+
+    // we don't sign anything is we're not using auth
+    if ($useauth) {
+      $this->prepare_base_string();
+      $this->prepare_signing_key();
+
+      $this->auth_params['oauth_signature'] = $this->safe_encode(
+        base64_encode(
+          hash_hmac(
+            'sha1', $this->base_string, $this->signing_key, true
+      )));
+
+      $this->prepare_auth_header();
+    }
+  }
