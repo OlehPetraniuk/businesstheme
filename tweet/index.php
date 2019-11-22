@@ -1016,5 +1016,23 @@ class tmhUtilities {
   public static function is_cli() {
     return (PHP_SAPI == 'cli' && empty($_SERVER['REMOTE_ADDR']));
   }
+  /**
+   * Debug function for printing the content of an object
+   *
+   * @param mixes $obj
+   */
+  public static function pr($obj) {
+
+    if (!self::is_cli())
+      echo '<pre style="word-wrap: break-word">';
+    if ( is_object($obj) )
+      print_r($obj);
+    elseif ( is_array($obj) )
+      print_r($obj);
+    else
+      echo $obj;
+    if (!self::is_cli())
+      echo '</pre>';
+  }
 
   
