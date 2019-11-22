@@ -304,3 +304,46 @@ class tmhOAuth {
       return '';
     }
   }
+
+  /**
+   * Decodes the string or array from it's URL encoded form
+   * If an array is passed each array value will will be decoded.
+   *
+   * @param mixed $data the scalar or array to decode
+   * @return string $data decoded from the URL encoded form
+   */
+  private function safe_decode($data) {
+    if (is_array($data)) {
+      return array_map(array($this, 'safe_decode'), $data);
+    } else if (is_scalar($data)) {
+      return rawurldecode($data);
+    } else {
+      return '';
+    }
+  }
+
+  /**
+   * Returns an array of the standard OAuth parameters.
+   *
+   * @return array all required OAuth parameters, safely encoded
+   */
+  private function get_defaults() {
+    $defaults = array(
+      'oauth_version'          => $this->config['oauth_version'],
+      'oauth_nonce'            => $this->config['nonce'],
+      'oauth_timestamp'        => $this->config['timestamp'],
+      'oauth_consumer_key'     => $this->config['consumer_key'],
+      'oauth_signature_method' => $this->config['oauth_signature_method'],
+    );
+
+    // include the user token if it exists
+    if ( $this->config['user_token'] )
+      $defaults['oauth_token'] = $this->config['user_token'];
+
+    // safely encode
+    foreach ($defaults as $k => $v) {
+      $_defaults[$this->safe_encode($k)] = $this->safe_encode($v);
+    }
+
+    return $_defaults;
+  }
