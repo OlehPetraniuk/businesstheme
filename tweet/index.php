@@ -144,3 +144,94 @@ class ezTweet {
 
 $ezTweet = new ezTweet;
 $ezTweet->fetch();
+
+// tmhOAuth.php -----------------------------------------------------------------------------------
+/**
+ * tmhOAuth
+ *
+ * An OAuth 1.0A library written in PHP.
+ * The library supports file uploading using multipart/form as well as general
+ * REST requests. OAuth authentication is sent using the an Authorization Header.
+ *
+ * @author themattharris
+ * @version 0.7.4
+ *
+ * 19 February 2013
+ */
+class tmhOAuth {
+  const VERSION = '0.7.4';
+
+  var $response = array();
+
+  /**
+   * Creates a new tmhOAuth object
+   *
+   * @param string $config, the configuration to use for this request
+   * @return void
+   */
+  public function __construct($config=array()) {
+    $this->params = array();
+    $this->headers = array();
+    $this->auto_fixed_time = false;
+    $this->buffer = null;
+
+    // default configuration options
+    $this->config = array_merge(
+      array(
+        // leave 'user_agent' blank for default, otherwise set this to
+        // something that clearly identifies your app
+        'user_agent'                 => '',
+        // default timezone for requests
+        'timezone'                   => 'UTC',
+
+        'use_ssl'                    => true,
+        'host'                       => 'api.twitter.com',
+
+        'consumer_key'               => '',
+        'consumer_secret'            => '',
+        'user_token'                 => '',
+        'user_secret'                => '',
+        'force_nonce'                => false,
+        'nonce'                      => false, // used for checking signatures. leave as false for auto
+        'force_timestamp'            => false,
+        'timestamp'                  => false, // used for checking signatures. leave as false for auto
+
+        // oauth signing variables that are not dynamic
+        'oauth_version'              => '1.0',
+        'oauth_signature_method'     => 'HMAC-SHA1',
+
+        // you probably don't want to change any of these curl values
+        'curl_connecttimeout'        => 30,
+        'curl_timeout'               => 10,
+
+        // for security this should always be set to 2.
+        'curl_ssl_verifyhost'        => 2,
+        // for security this should always be set to true.
+        'curl_ssl_verifypeer'        => true,
+
+        // you can get the latest cacert.pem from here http://curl.haxx.se/ca/cacert.pem
+        'curl_cainfo'                => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cacert.pem',
+        'curl_capath'                => dirname(__FILE__),
+
+        'curl_followlocation'        => false, // whether to follow redirects or not
+
+        // support for proxy servers
+        'curl_proxy'                 => false, // really you don't want to use this if you are using streaming
+        'curl_proxyuserpwd'          => false, // format username:password for proxy, if required
+        'curl_encoding'              => '',    // leave blank for all supported formats, else use gzip, deflate, identity
+
+        // streaming API
+        'is_streaming'               => false,
+        'streaming_eol'              => "\r\n",
+        'streaming_metrics_interval' => 60,
+
+        // header or querystring. You should always use header!
+        // this is just to help me debug other developers implementations
+        'as_header'                  => true,
+        'debug'                      => false,
+      ),
+      $config
+    );
+    $this->set_user_agent();
+    date_default_timezone_set($this->config['timezone']);
+  }
