@@ -405,3 +405,64 @@ class tmhOAuth {
     // but not the path
     $this->url .= $path;
   }
+
+
+  /**
+   * Prepares all parameters for the base string and request.
+   * Multipart parameters are ignored as they are not defined in the specification,
+   * all other types of parameter are encoded for compatibility with OAuth.
+   *
+   * @param array $params the parameters for the request
+   * @return void prepared values are stored in the class variable 'signing_params'
+   */
+  private function prepare_params($params) {
+    // do not encode multipart parameters, leave them alone
+    if ($this->config['multipart']) {
+      $this->request_params = $params;
+      $params = array();
+    }
+
+    // signing parameters are request parameters + OAuth default parameters
+    $this->signing_params = array_merge($this->get_defaults(), (array)$params);
+
+    // Remove oauth_signature if present
+    // Ref: Spec: 9.1.1 ("The oauth_signature parameter MUST be excluded.")
+    if (isset($this->signing_params['oauth_signature'])) {
+      unset($this->signing_params['oauth_signature']);
+    }
+
+    // Parameters are sorted by name, using lexicographical byte value ordering.
+    // Ref: Spec: 9.1.1 (1)
+    uksort($this->signing_params, 'strcmp');
+
+    // encode. Also sort the signed parameters from the POST parameters
+    foreach ($this->signing_params as $k => $v) {
+      $k = $this->safe_encode($k);
+
+      if (is_array($v))
+        $v = implode(',', $v);
+
+      $v = $this->safe_encode($v);
+      $_signing_params[$k] = $v;
+      $kv[] = "{$k}={$v}";
+    }
+
+    // auth params = the default oauth params which are present in our collection of signing params
+    $this->auth_params = array_intersect_key($this->get_defaults(), $_signing_params);
+    if (isset($_signing_params['oauth_callback'])) {
+      $this->auth_params['oauth_callback'] = $_signing_params['oauth_callback'];
+      unset($_signing_params['oauth_callback']);
+    }
+
+    if (isset($_signing_params['oauth_verifier'])) {
+      $this->auth_params['oauth_verifier'] = $_signing_params['oauth_verifier'];
+      unset($_signing_params['oauth_verifier']);
+    }
+
+    // request_params is already set if we're doing multipart, if not we need to set them now
+    if ( ! $this->config['multipart'])
+      $this->request_params = array_diff_key($_signing_params, $this->get_defaults());
+
+    // create the parameter part of the base string
+    $this->signing_params = implode('&', $kv);
+  }
