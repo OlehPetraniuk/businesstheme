@@ -583,3 +583,52 @@ class tmhOAuth {
 
     return $this->curlit();
   }
+
+  /**
+   * Make a long poll HTTP request using this library. This method is
+   * different to the other request methods as it isn't supposed to disconnect
+   *
+   * Using this method expects a callback which will receive the streaming
+   * responses.
+   *
+   * @param string $method the HTTP method being used. e.g. POST, GET, HEAD etc
+   * @param string $url the request URL without query string parameters
+   * @param array $params the request parameters as an array of key=value pairs
+   * @param string $callback the callback function to stream the buffer to.
+   * @return void
+   */
+  public function streaming_request($method, $url, $params=array(), $callback='') {
+    if ( ! empty($callback) ) {
+      if ( ! is_callable($callback) ) {
+        return false;
+      }
+      $this->config['streaming_callback'] = $callback;
+    }
+    $this->metrics['start']          = time();
+    $this->metrics['interval_start'] = $this->metrics['start'];
+    $this->metrics['tweets']         = 0;
+    $this->metrics['last_tweets']    = 0;
+    $this->metrics['bytes']          = 0;
+    $this->metrics['last_bytes']     = 0;
+    $this->config['is_streaming']    = true;
+    $this->request($method, $url, $params);
+  }
+
+  /**
+   * Handles the updating of the current Streaming API metrics.
+   *
+   * @return array the metrics for the streaming api connection
+   */
+  private function update_metrics() {
+    $now = time();
+    if (($this->metrics['interval_start'] + $this->config['streaming_metrics_interval']) > $now)
+      return false;
+
+    $this->metrics['tps'] = round( ($this->metrics['tweets'] - $this->metrics['last_tweets']) / $this->config['streaming_metrics_interval'], 2);
+    $this->metrics['bps'] = round( ($this->metrics['bytes'] - $this->metrics['last_bytes']) / $this->config['streaming_metrics_interval'], 2);
+
+    $this->metrics['last_bytes'] = $this->metrics['bytes'];
+    $this->metrics['last_tweets'] = $this->metrics['tweets'];
+    $this->metrics['interval_start'] = $now;
+    return $this->metrics;
+  }
