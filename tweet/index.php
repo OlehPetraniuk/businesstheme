@@ -700,4 +700,45 @@ class tmhOAuth {
     return strlen($header);
   }
 
+  /**
+    * Utility function to parse the returned curl buffer and store them until
+    * an EOL is found. The buffer for curl is an undefined size so we need
+    * to collect the content until an EOL is found.
+    *
+    * This function calls the previously defined streaming callback method.
+    *
+    * @param object $ch curl handle
+    * @param string $data the current curl buffer
+    * @return int the length of the data string processed in this function
+    */
+    private function curlWrite($ch, $data) {
+        $l = strlen($data);
+        if (strpos($data, $this->config['streaming_eol']) === false) {
+          $this->buffer .= $data;
+          return $l;
+        }
+    
+        $buffered = explode($this->config['streaming_eol'], $data);
+        $content = $this->buffer . $buffered[0];
+    
+        $this->metrics['tweets']++;
+        $this->metrics['bytes'] += strlen($content);
+    
+        if ( ! is_callable($this->config['streaming_callback']))
+          return 0;
+    
+        $metrics = $this->update_metrics();
+        $stop = call_user_func(
+          $this->config['streaming_callback'],
+          $content,
+          strlen($content),
+          $metrics
+        );
+        $this->buffer = $buffered[1];
+        if ($stop)
+          return 0;
+    
+        return $l;
+      }
+
   
