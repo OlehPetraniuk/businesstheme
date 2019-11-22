@@ -235,3 +235,24 @@ class tmhOAuth {
     $this->set_user_agent();
     date_default_timezone_set($this->config['timezone']);
   }
+
+  /**
+   * Sets the useragent for PHP to use
+   * If '$this->config['user_agent']' already has a value it is used instead of one
+   * being generated.
+   *
+   * @return void value is stored to the config array class variable
+   */
+  private function set_user_agent() {
+    if (!empty($this->config['user_agent']))
+      return;
+
+    if ($this->config['curl_ssl_verifyhost'] && $this->config['curl_ssl_verifypeer']) {
+      $ssl = '+SSL';
+    } else {
+      $ssl = '-SSL';
+    }
+
+    $ua = 'tmhOAuth ' . self::VERSION . $ssl . ' - //github.com/themattharris/tmhOAuth';
+    $this->config['user_agent'] = $ua;
+  }
