@@ -466,3 +466,40 @@ class tmhOAuth {
     // create the parameter part of the base string
     $this->signing_params = implode('&', $kv);
   }
+
+  /**
+   * Prepares the OAuth signing key
+   *
+   * @return void prepared signing key is stored in the class variable 'signing_key'
+   */
+  private function prepare_signing_key() {
+    $this->signing_key = $this->safe_encode($this->config['consumer_secret']) . '&' . $this->safe_encode($this->config['user_secret']);
+  }
+
+  /**
+   * Prepare the base string.
+   * Ref: Spec: 9.1.3 ("Concatenate Request Elements")
+   *
+   * @return void prepared base string is stored in the class variable 'base_string'
+   */
+  private function prepare_base_string() {
+    $url = $this->url;
+
+    # if the host header is set we need to rewrite the basestring to use
+    # that, instead of the request host. otherwise the signature won't match
+    # on the server side
+    if (!empty($this->custom_headers['Host'])) {
+      $url = str_ireplace(
+        $this->config['host'],
+        $this->custom_headers['Host'],
+        $url
+      );
+    }
+
+    $base = array(
+      $this->method,
+      $url,
+      $this->signing_params
+    );
+    $this->base_string = implode('&', $this->safe_encode($base));
+  }
