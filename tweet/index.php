@@ -867,4 +867,30 @@ class tmhOAuth {
   }
 }
 
+// tmhUtilities.php --------------------------------------
+/**
+ * tmhUtilities
+ *
+ * Helpful utility and Twitter formatting functions
+ *
+ * @author themattharris
+ * @version 0.5.0
+ *
+ * 04 September 2012
+ */
+class tmhUtilities {
+    const VERSION = '0.5.0';
+    /**
+     * Entifies the tweet using the given entities element.
+     * Deprecated.
+     * You should instead use entify_with_options.
+     *
+     * @param array $tweet the json converted to normalised array
+     * @param array $replacements if specified, the entities and their replacements will be stored to this variable
+     * @return the tweet text with entities replaced with hyperlinks
+     */
+    public static function entify($tweet, &$replacements=array()) {
+      return tmhUtilities::entify_with_options($tweet, array(), $replacements);
+    }
+
   
