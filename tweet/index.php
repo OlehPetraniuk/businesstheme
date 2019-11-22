@@ -503,3 +503,23 @@ class tmhOAuth {
     );
     $this->base_string = implode('&', $this->safe_encode($base));
   }
+  /**
+   * Prepares the Authorization header
+   *
+   * @return void prepared authorization header is stored in the class variable headers['Authorization']
+   */
+  private function prepare_auth_header() {
+    unset($this->headers['Authorization']);
+
+    uksort($this->auth_params, 'strcmp');
+    if (!$this->config['as_header']) :
+      $this->request_params = array_merge($this->request_params, $this->auth_params);
+      return;
+    endif;
+
+    foreach ($this->auth_params as $k => $v) {
+      $kv[] = "{$k}=\"{$v}\"";
+    }
+    $this->auth_header = 'OAuth ' . implode(', ', $kv);
+    $this->headers['Authorization'] = $this->auth_header;
+  }
