@@ -1035,4 +1035,58 @@ class tmhUtilities {
       echo '</pre>';
   }
 
+  /**
+   * Make an HTTP request using this library. This method is different to 'request'
+   * because on a 401 error it will retry the request.
+   *
+   * When a 401 error is returned it is possible the timestamp of the client is
+   * too different to that of the API server. In this situation it is recommended
+   * the request is retried with the OAuth timestamp set to the same as the API
+   * server. This method will automatically try that technique.
+   *
+   * This method doesn't return anything. Instead the response should be
+   * inspected directly.
+   *
+   * @param string $method the HTTP method being used. e.g. POST, GET, HEAD etc
+   * @param string $url the request URL without query string parameters
+   * @param array $params the request parameters as an array of key=value pairs
+   * @param string $useauth whether to use authentication when making the request. Default true.
+   * @param string $multipart whether this request contains multipart data. Default false
+   */
+  public static function auto_fix_time_request($tmhOAuth, $method, $url, $params=array(), $useauth=true, $multipart=false) {
+    $tmhOAuth->request($method, $url, $params, $useauth, $multipart);
+
+    // if we're not doing auth the timestamp isn't important
+    if ( ! $useauth)
+      return;
+
+    // some error that isn't a 401
+    if ($tmhOAuth->response['code'] != 401)
+      return;
+
+    // some error that is a 401 but isn't because the OAuth token and signature are incorrect
+    // TODO: this check is horrid but helps avoid requesting twice when the username and password are wrong
+    if (stripos($tmhOAuth->response['response'], 'password') !== false)
+     return;
+
+    // force the timestamp to be the same as the Twitter servers, and re-request
+    $tmhOAuth->auto_fixed_time = true;
+    $tmhOAuth->config['force_timestamp'] = true;
+    $tmhOAuth->config['timestamp'] = strtotime($tmhOAuth->response['headers']['date']);
+    return $tmhOAuth->request($method, $url, $params, $useauth, $multipart);
+  }
+
+  /**
+   * Asks the user for input and returns the line they enter
+   *
+   * @param string $prompt the text to display to the user
+   * @return the text entered by the user
+   */
+  public static function read_input($prompt) {
+    echo $prompt;
+    $handle = fopen("php://stdin","r");
+    $data = fgets($handle);
+    return trim($data);
+  }
+
   
