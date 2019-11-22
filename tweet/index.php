@@ -105,4 +105,42 @@ class ezTweet {
 			}
 			return $JSONraw['response'];
 		}
+    }
+    private function getTwitterJSON() {
+	global $consumer_key, $consumer_secret, $access_token, $access_token_secret;
+
+		$tmhOAuth = new tmhOAuth(array(
+			'host'                  => $_POST['request']['host'],
+			'consumer_key'          => $consumer_key,
+			'consumer_secret'       => $consumer_secret,
+			'user_token'            => $access_token,
+			'user_secret'           => $access_token_secret,
+			'curl_ssl_verifypeer'   => false
+		));
+
+		$url = $_POST['request']['url'];
+		$params = $_POST['request']['parameters'];
+
+		$tmhOAuth->request('GET', $tmhOAuth->url($url), $params);
+		return $tmhOAuth->response;
 	}
+
+	private function generateCFID() {
+		// The unique cached filename ID
+		return md5(serialize($_POST)).'.json';
+	}
+
+	private function pathify(&$path) {
+		// Ensures our user-specified paths are up to snuff
+		$path = realpath($path).'/';
+	}
+
+	private function consoleDebug($message) {
+		if($this->debug === true) {
+			$this->message .= 'tweet.js: '.$message."\n";
+		}
+	}
+}
+
+$ezTweet = new ezTweet;
+$ezTweet->fetch();
