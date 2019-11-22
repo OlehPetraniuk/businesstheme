@@ -553,3 +553,33 @@ class tmhOAuth {
       $this->prepare_auth_header();
     }
   }
+
+  /**
+   * Make an HTTP request using this library. This method doesn't return anything.
+   * Instead the response should be inspected directly.
+   *
+   * @param string $method the HTTP method being used. e.g. POST, GET, HEAD etc
+   * @param string $url the request URL without query string parameters
+   * @param array $params the request parameters as an array of key=value pairs. Default empty array
+   * @param string $useauth whether to use authentication when making the request. Default true
+   * @param string $multipart whether this request contains multipart data. Default false
+   * @param array $headers any custom headers to send with the request. Default empty array
+   * @return int the http response code for the request. 0 is returned if a connection could not be made
+   */
+  public function request($method, $url, $params=array(), $useauth=true, $multipart=false, $headers=array()) {
+    // reset the request headers (we don't want to reuse them)
+    $this->headers = array();
+    $this->custom_headers = $headers;
+
+    $this->config['multipart'] = $multipart;
+
+    $this->create_nonce();
+    $this->create_timestamp();
+
+    $this->sign($method, $url, $params, $useauth);
+
+    if (!empty($this->custom_headers))
+      $this->headers = array_merge((array)$this->headers, (array)$this->custom_headers);
+
+    return $this->curlit();
+  }
