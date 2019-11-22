@@ -741,4 +741,38 @@ class tmhOAuth {
         return $l;
       }
 
+      /**
+   * Makes a curl request. Takes no parameters as all should have been prepared
+   * by the request method
+   *
+   * the response data is stored in the class variable 'response'
+   *
+   * @return int the http response code for the request. 0 is returned if a connection could not be made
+   */
+  private function curlit() {
+    $this->response['raw'] = '';
+
+    // method handling
+    switch ($this->method) {
+      case 'POST':
+        break;
+      default:
+        // GET, DELETE request so convert the parameters to a querystring
+        if ( ! empty($this->request_params)) {
+          foreach ($this->request_params as $k => $v) {
+            // Multipart params haven't been encoded yet.
+            // Not sure why you would do a multipart GET but anyway, here's the support for it
+            if ($this->config['multipart']) {
+              $params[] = $this->safe_encode($k) . '=' . $this->safe_encode($v);
+            } else {
+              $params[] = $k . '=' . $v;
+            }
+          }
+          $qs = implode('&', $params);
+          $this->url = strlen($qs) > 0 ? $this->url . '?' . $qs : $this->url;
+          $this->request_params = array();
+        }
+        break;
+    }
+
   
